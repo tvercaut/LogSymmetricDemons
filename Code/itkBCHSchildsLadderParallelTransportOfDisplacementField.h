@@ -110,18 +110,6 @@ protected:
   itkSetObjectMacro( LieBracketFilterSecondOrder, LieBracketFilterType );
   itkGetObjectMacro( LieBracketFilterSecondOrder, LieBracketFilterType );
 
-#if ( ITK_VERSION_MAJOR < 3 ) || ( ITK_VERSION_MAJOR == 3 && ITK_VERSION_MINOR < 13 )
-  virtual void SetInPlace(const bool b)
-  {
-    // Work-around for http://www.itk.org/Bug/view.php?id=8672
-    if( b )
-      {
-      itkWarningMacro("A more recent version of ITK is required for this filter to run inplace");
-      }
-    this->Superclass::SetInPlace(false);
-  }
-
-#endif
 private:
   BCHSchildsLadderParallelTransportOfDisplacementField(const Self &); // purposely not implemented
   void operator=(const Self &);                    // purposely not implemented

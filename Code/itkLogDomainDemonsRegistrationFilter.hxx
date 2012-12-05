@@ -66,12 +66,8 @@ LogDomainDemonsRegistrationFilter<TFixedImage, TMovingImage, TField>
   // std::cout<<"LogDomainDemonsRegistrationFilter::InitializeIteration"<<std::endl;
   // update variables in the equation object
   DemonsRegistrationFunctionType * const f = this->DownCastDifferenceFunctionType();
-
-#if (ITK_VERSION_MAJOR < 4)
-  f->SetDeformationField( this->GetDeformationField() );
-#else
   f->SetDisplacementField( this->GetDeformationField() );
-#endif
+
   // call the superclass  implementation ( initializes f )
   Superclass::InitializeIteration();
 }
@@ -178,11 +174,7 @@ LogDomainDemonsRegistrationFilter<TFixedImage, TMovingImage, TField>
 template <class TFixedImage, class TMovingImage, class TField>
 void
 LogDomainDemonsRegistrationFilter<TFixedImage, TMovingImage, TField>
-#if (ITK_VERSION_MAJOR < 4)
-::ApplyUpdate(TimeStepType dt)
-#else
 ::ApplyUpdate(const TimeStepType& dt)
-#endif
 {
   // std::cout<<"LogDomainDemonsRegistrationFilter::ApplyUpdate"<<std::endl;
   // If we smooth the update buffer before applying it, then the are

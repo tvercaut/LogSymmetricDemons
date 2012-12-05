@@ -70,8 +70,8 @@ endif( _ITKVersionNum LESS 30800 )
 if(ITK_VERSION_MAJOR LESS 4)
    set(ITKv3_REQUIRED_FLAGS
              ITK_USE_REVIEW
-             ITK_USE_REVIEW_STATISTICS
-             ITK_USE_OPTIMIZED_REGISTRATION_METHODS
+             #ITK_USE_REVIEW_STATISTICS
+             #ITK_USE_OPTIMIZED_REGISTRATION_METHODS
              ITK_USE_CENTERED_PIXEL_COORDINATES_CONSISTENTLY
              ITK_USE_ORIENTED_IMAGE_DIRECTION
             )
@@ -104,9 +104,13 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 
 #-----------------------------------------------------------------------------
 #Build the ITK code if necessary or simply add the corresponding include dirs
-include_directories(Code)
-add_subdirectory(Code)
-
+if(ITK_VERSION_MAJOR LESS 4) 
+  include_directories(Code-itk3)
+  add_subdirectory(Code-itk3)
+else()
+  include_directories(Code)
+  add_subdirectory(Code)
+endif()
 
 #-----------------------------------------------------------------------------
 #Build the matlab bindings if we have some
@@ -127,19 +131,26 @@ set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
 mark_as_advanced(BUILDNAME)
 
 enable_testing()
-add_subdirectory(Testing)
-
+if(ITK_VERSION_MAJOR LESS 4) 
+  add_subdirectory(Testing-itk3)
+else()
+  add_subdirectory(Testing)
+endif()
 
 #-----------------------------------------------------------------------------
 #Build the applications
-add_subdirectory(Applications)
+if(ITK_VERSION_MAJOR LESS 4) 
+  add_subdirectory(Applications-itk3)
+else()
+  add_subdirectory(Applications)
+endif()
 
 
 #-----------------------------------------------------------------------------
 # CPack is only used to generate the source package
 set(CPACK_PACKAGE_VERSION_MAJOR "0")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "5")
+set(CPACK_PACKAGE_VERSION_PATCH "6")
 
 set(CPACK_SOURCE_IGNORE_FILES
   ${CPACK_SOURCE_IGNORE_FILES}

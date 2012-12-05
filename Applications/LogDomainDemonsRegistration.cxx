@@ -1015,11 +1015,8 @@ void LogDomainDemonsRegistrationFunction( arguments args )
   warper->SetOutputSpacing( fixedImage->GetSpacing() );
   warper->SetOutputOrigin( fixedImage->GetOrigin() );
   warper->SetOutputDirection( fixedImage->GetDirection() );
-#if (ITK_VERSION_MAJOR < 4)
-  warper->SetDeformationField( defField );
-#else
   warper->SetDisplacementField( defField );
-#endif
+
   // Write warped image out to file
   typedef PixelType                              OutputPixelType;
   typedef itk::Image<OutputPixelType, Dimension> OutputImageType;
@@ -1170,11 +1167,8 @@ void LogDomainDemonsRegistrationFunction( arguments args )
     gridwarper->SetOutputSpacing( fixedImage->GetSpacing() );
     gridwarper->SetOutputOrigin( fixedImage->GetOrigin() );
     gridwarper->SetOutputDirection( fixedImage->GetDirection() );
-#if (ITK_VERSION_MAJOR < 4)
-    gridwarper->SetDeformationField( defField );
-#else
     gridwarper->SetDisplacementField( defField );
-#endif
+
     // Write warped grid to file
     typedef itk::ImageFileWriter<GridImageType> GridWriterType;
 

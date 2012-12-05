@@ -90,13 +90,8 @@ BCHConjugateActionFilter<TInputImage, TOutputImage>
       m_Adder->SetInput( 0, m_MultiplierByHalf->GetOutput() );
       m_Adder->SetInput( 1, leftField );
       m_Adder->SetInput( 2, rightField );
-#if ( ITK_VERSION_MAJOR < 3 ) || ( ITK_VERSION_MAJOR == 3 && ITK_VERSION_MINOR < 13 )
-      // Work-around for http://www.itk.org/Bug/view.php?id=8672
-      m_Adder->InPlaceOff();
-#else
       // Adder can be inplace since the 0th input is a temp field
       m_Adder->InPlaceOn();
-#endif
       break;
       }
     default:

@@ -115,20 +115,12 @@ SymmetricLogDomainDemonsRegistrationFilter<TFixedImage, TMovingImage, TField>
   // update variables in the equation object
   DemonsRegistrationFunctionType *f = this->GetForwardRegistrationFunctionType();
 
-#if (ITK_VERSION_MAJOR < 4)
-  f->SetDeformationField( this->GetDeformationField() );
-#else
   f->SetDisplacementField( this->GetDeformationField() );
-#endif
 
   DemonsRegistrationFunctionType *b = this->GetBackwardRegistrationFunctionType();
   b->SetFixedImage( this->GetMovingImage() );
   b->SetMovingImage( this->GetFixedImage() );
-#if (ITK_VERSION_MAJOR < 4)
-  b->SetDeformationField( this->GetInverseDisplacementField() );
-#else
   b->SetDisplacementField( this->GetInverseDisplacementField() );
-#endif
   b->InitializeIteration();
 
   // call the superclass  implementation ( initializes f )
@@ -448,11 +440,7 @@ SymmetricLogDomainDemonsRegistrationFilter<TFixedImage, TMovingImage, TField>
 template <class TFixedImage, class TMovingImage, class TField>
 void
 SymmetricLogDomainDemonsRegistrationFilter<TFixedImage, TMovingImage, TField>
-#if (ITK_VERSION_MAJOR < 4)
-::ApplyUpdate(TimeStepType dt)
-#else
 ::ApplyUpdate(const TimeStepType& dt)
-#endif
 {
   const DemonsRegistrationFunctionType *drfpf = this->GetForwardRegistrationFunctionType();
   const DemonsRegistrationFunctionType *drfpb = this->GetBackwardRegistrationFunctionType();
